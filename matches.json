@@ -10,11 +10,14 @@
     "kickoff_time": "11:00",
     "status": "live",
     "channels": [
-      { "name": "HD AUTO", "url": "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8" },
-      { "name": "HD IOS", "url": "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8" },
-      { "name": "CH 3", "url": "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8" },
-      { "name": "CH 4", "url": "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8" },
-      { "name": "CH 5", "url": "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8" }
+      { "name": "CH AUTO", "url": "https://plasak.pages.dev/?id=ch2" },
+      { "name": "CH 2", "url": "https://plasak.pages.dev/?id=ch2" },
+      { "name": "CH 3", "url": "https://plasak.pages.dev/?id=fox1" },
+      { "name": "CH 4", "url": "https://plasak.pages.dev/?id=tipik" },
+      { "name": "CH 5", "url": "https://plasak.pages.dev/?id=dspot" },
+      { "name": "CH 6", "url": "https://plasak.pages.dev/?id=fusbal" },
+      { "name": "CH 7", "url": "https://plasak.pages.dev/?id=caze1" },
+      { "name": "CH 8", "url": "https://plasak.pages.dev/?id=caze2" }
     ]
   },
   {
