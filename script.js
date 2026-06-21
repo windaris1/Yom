@@ -3,13 +3,9 @@ let currentChannel = null;
 let activeMatchId = null;
 
 async function loadMatches() {
-  try {
-    const res = await fetch('matches.json');
-    matches = await res.json();
-    renderMatches(matches);
-  } catch (err) {
-    document.getElementById('matchList').innerHTML = '<div style="padding:20px;text-align:center;color:#9ca3af;">Failed to load matches</div>';
-  }
+  const res = await fetch('matches.json');
+  matches = await res.json();
+  renderMatches(matches);
 }
 
 function renderMatches(data) {
@@ -20,12 +16,10 @@ function renderMatches(data) {
     return;
   }
 
-  container.innerHTML = data.map(match => {
-    const isActive = activeMatchId === match.id;
-    return `
+  container.innerHTML = data.map(match => `
     <div class="event-container" onclick='toggleMatch("${match.id}")'>
       <h2>
-        <img class="sport-icon" src="${match.league_logo}">
+        <img class="sport-icon" src="${match.league_logo}" width="18" height="18">
         ${match.league}
       </h2>
       <div class="team">
@@ -39,24 +33,21 @@ function renderMatches(data) {
       <div class="kickoff-match-date">${match.kickoff_date}</div>
       <div class="kickoff-match-time">${match.kickoff_time}</div>
 
-      <div class="server-buttons ${isActive? 'active' : ''}" id="server-${match.id}">
-        <div class="server-toolbar">
-          <span>Select server:</span>
-          <span onclick="refreshStream(event)" style="cursor:pointer">↻</span>
-        </div>
+      <div class="server-buttons ${activeMatchId === match.id? 'active' : ''}" id="server-${match.id}">
         <div class="buttons-container" id="grid-${match.id}"></div>
       </div>
     </div>
-  `}).join('');
+  `).join('');
 }
 
 function toggleMatch(matchId) {
   const match = matches.find(m => m.id === matchId);
-  const serverDiv = document.getElementById(`server-${matchId}`);
 
   if (activeMatchId && activeMatchId!== matchId) {
     document.getElementById(`server-${activeMatchId}`).classList.remove('active');
   }
+
+  const serverDiv = document.getElementById(`server-${matchId}`);
 
   if (activeMatchId === matchId) {
     serverDiv.classList.remove('active');
@@ -84,13 +75,6 @@ function playChannel(btn, url, e) {
   document.getElementById('video-iframe').src = url;
 }
 
-function refreshStream(e) {
-  e.stopPropagation();
-  if (currentChannel) {
-    document.getElementById('video-iframe').src = currentChannel;
-  }
-}
-
 document.getElementById('search').addEventListener('input', function(e) {
   const query = e.target.value.toLowerCase();
   const filtered = matches.filter(m =>
@@ -100,13 +84,5 @@ document.getElementById('search').addEventListener('input', function(e) {
   );
   renderMatches(filtered);
 });
-
-// Arrow scroll tabs
-document.querySelector('.category-arrow-btn.left').onclick = () => {
-  document.querySelector('.category-scroll-wrapper').scrollBy({left: -200, behavior: 'smooth'});
-}
-document.querySelector('.category-arrow-btn.right').onclick = () => {
-  document.querySelector('.category-scroll-wrapper').scrollBy({left: 200, behavior: 'smooth'});
-}
 
 loadMatches();
