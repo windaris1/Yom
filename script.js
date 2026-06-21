@@ -3,16 +3,27 @@ let currentChannel = null;
 let activeMatchId = null;
 
 async function loadMatches() {
-  const res = await fetch('matches.json');
-  matches = await res.json();
-  renderMatches(matches);
+  try {
+    const res = await fetch('matches.json');
+    matches = await res.json();
+    renderMatches(matches);
+  } catch (err) {
+    document.getElementById('matchList').innerHTML = '<div style="padding:20px;text-align:center;color:#9ca3af;">Failed to load matches</div>';
+  }
 }
 
 function renderMatches(data) {
   const container = document.getElementById('matchList');
-  container.innerHTML = data.map(match => `
+
+  if (data.length === 0) {
+    container.innerHTML = '<div style="padding:20px;text-align:center;color:#9ca3af;">No matches found</div>';
+    return;
+  }
+
+  container.innerHTML = data.map(match => {
+    const isActive = activeMatchId === match.id;
+    return `
     <div class="event-container" onclick='toggleMatch("${match.id}")'>
-      ${match.status === 'live'? '<div class="live-label">Live</div>' : ''}
       <h2>
         <img class="sport-icon" src="${match.league_logo}">
         ${match.league}
@@ -28,25 +39,24 @@ function renderMatches(data) {
       <div class="kickoff-match-date">${match.kickoff_date}</div>
       <div class="kickoff-match-time">${match.kickoff_time}</div>
 
-      <div class="server-buttons ${activeMatchId === match.id? 'active' : ''}" id="server-${match.id}">
+      <div class="server-buttons ${isActive? 'active' : ''}" id="server-${match.id}">
         <div class="server-toolbar">
-          <span>Select a server stream:</span>
+          <span>Select server:</span>
           <span onclick="refreshStream(event)" style="cursor:pointer">↻</span>
         </div>
         <div class="buttons-container" id="grid-${match.id}"></div>
       </div>
-    `
-  ).join('');
+    </div>
+  `}).join('');
 }
 
 function toggleMatch(matchId) {
   const match = matches.find(m => m.id === matchId);
+  const serverDiv = document.getElementById(`server-${matchId}`);
 
   if (activeMatchId && activeMatchId!== matchId) {
     document.getElementById(`server-${activeMatchId}`).classList.remove('active');
   }
-
-  const serverDiv = document.getElementById(`server-${matchId}`);
 
   if (activeMatchId === matchId) {
     serverDiv.classList.remove('active');
@@ -57,7 +67,7 @@ function toggleMatch(matchId) {
 
     const grid = document.getElementById(`grid-${matchId}`);
     grid.innerHTML = match.channels.map((ch, i) =>
-      `<div class="server-button ${i===0?'active':''}" onclick="playChannel(this, '${ch.url}', event)">${ch.name}</div>`
+      `<div class="server-button ${i===0?'active':''}" onclick="playChannel(this, '${ch.url}', event)">CH ${i+1}</div>`
     ).join('');
 
     if (match.channels.length > 0) {
@@ -90,5 +100,13 @@ document.getElementById('search').addEventListener('input', function(e) {
   );
   renderMatches(filtered);
 });
+
+// Arrow scroll tabs
+document.querySelector('.category-arrow-btn.left').onclick = () => {
+  document.querySelector('.category-scroll-wrapper').scrollBy({left: -200, behavior: 'smooth'});
+}
+document.querySelector('.category-arrow-btn.right').onclick = () => {
+  document.querySelector('.category-scroll-wrapper').scrollBy({left: 200, behavior: 'smooth'});
+}
 
 loadMatches();
