@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KLTRA TV</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Video Player -->
+  <div class="player-wrapper" id="playerWrapper" style="display:none;">
+    <div class="player-header">
+      <button onclick="closePlayer()">✕</button>
+      <span id="playerTitle">Match</span>
+      <button onclick="toggleMute()" id="muteBtn">🔊</button>
+    </div>
+    <video id="videoPlayer" controls autoplay playsinline></video>
+    <div class="server-list">
+      <p>You can select a server stream:</p>
+      <div class="server-grid" id="serverGrid"></div>
+    </div>
+  </div>
+
+  <div class="wrapper">
+    <div class="banner">
+      <img src="banner.jpg" alt="KLTRATV Banner">
+    </div>
+
+    <!-- Countdown Modal -->
+    <div class="countdown-overlay" id="countdownModal">
+      <div class="countdown-box">
+        <div class="countdown-title">MATCH STARTS IN</div>
+        <div class="countdown-teams" id="countdownTeams"></div>
+        <div class="countdown-timer" id="countdownTimer"></div>
+        <button class="close-countdown" onclick="closeCountdown()">Close</button>
+      </div>
+    </div>
+
+    <div class="tabs">
+      <div class="tab active">
+        <span class="dot"></span> Live Event
+      </div>
+      <div class="tab hot active">
+        <span>🔥</span> Hot Event
+      </div>
+    </div>
+
+    <div class="search-box">
+      <span>🔍</span>
+      <input type="text" id="search" placeholder="Search by league or team name...">
+    </div>
+
+    <div class="match-list" id="matchList"></div>
+  </div>
+
+  <div class="bottom-nav">
+    <div class="nav-item active">
+      <div class="nav-icon">⊞</div>
+      Multi View
+    </div>
+    <div class="nav-item">
+      <div class="nav-icon">🤖</div>
+      Android TV
+    </div>
+    <div class="nav-item">
+      <div class="nav-icon">💬</div>
+      Chat
+    </div>
+    <div class="nav-item">
+      <div class="nav-icon">☕</div>
+      Saweria
+    </div>
+  </div>
+
+<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+<script src="script.js"></script>
+</body>
+</html>
