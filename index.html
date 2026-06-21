@@ -10,7 +10,6 @@
 <body>
 
 <div id="main-content">
-  <!-- Video Kiri -->
   <div class="video-container">
     <div class="video-wrapper">
       <img id="video-placeholder" src="https://kltraid.pages.dev/images/index.png">
@@ -18,17 +17,15 @@
     </div>
   </div>
 
-  <!-- Sidebar Kanan -->
   <div class="sidebar">
-    <!-- Tabs -->
     <div class="menu-wrapper-top">
-      <button class="category-arrow-btn left"><</button>
+      <button class="category-arrow-btn"><</button>
       <div class="category-scroll-wrapper">
-        <div class="category-buttons-container" id="categoryList">
+        <div class="category-buttons-container">
           <button class="category-freeze active">
             <span class="live-indicator">●</span> Live Event
           </button>
-          <button class="category-button">
+          <button class="category-button active">
             🔥 Hot Event
           </button>
           <button class="category-button">
@@ -38,10 +35,9 @@
           <button class="category-button">Tennis</button>
         </div>
       </div>
-      <button class="category-arrow-btn right">></button>
+      <button class="category-arrow-btn">></button>
     </div>
 
-    <!-- Search -->
     <div class="search-wrapper">
       <div class="search-input-wrapper">
         <span class="search-icon">🔍</span>
@@ -49,23 +45,25 @@
       </div>
     </div>
 
-    <!-- List Match -->
-    <div class="sidebar-content active" id="matchList"></div>
+    <div class="sidebar-content" id="matchList"></div>
 
-    <!-- Bottom Menu -->
     <div class="menu-wrapper-bottom">
       <div class="menu-container">
-        <button class="menu-button multiview-button">
-          <i>⊞</i> Multi View
+        <button class="menu-button">
+          <i>⊞</i>
+          <span>Multi View</span>
         </button>
-        <button class="menu-button androidtv-button">
-          <i>🤖</i> Android TV
+        <button class="menu-button">
+          <i>🤖</i>
+          <span>Android TV</span>
         </button>
-        <button class="menu-button chat-button">
-          <i>💬</i> Chat
+        <button class="menu-button">
+          <i>💬</i>
+          <span>Chat</span>
         </button>
-        <button class="menu-button saweria-button">
-          <i>☕</i> Saweria
+        <button class="menu-button">
+          <i>☕</i>
+          <span>Saweria</span>
         </button>
       </div>
     </div>
