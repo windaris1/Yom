@@ -1,4 +1,5 @@
 let matches = [];
+let currentChannel = null;
 
 async function loadMatches() {
   try {
@@ -6,13 +7,12 @@ async function loadMatches() {
     matches = await res.json();
     renderMatches(matches);
   } catch (err) {
-    console.error('Failed to load matches:', err);
     document.getElementById('matchList').innerHTML = '<div class="no-result">Failed to load matches</div>';
   }
 }
 
 function getFlagUrl(code) {
-  return code ? `https://flagcdn.com/w40/${code}.png` : '';
+  return code? `https://flagcdn.com/w40/${code}.png` : '';
 }
 
 function formatDate(dateStr) {
@@ -20,26 +20,20 @@ function formatDate(dateStr) {
   return date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
 }
 
-function getMatchDateTime(match) {
-  return new Date(`${match.kickoff_date}T${match.kickoff_time}:00Z`);
-}
-
 function renderMatches(data) {
   const container = document.getElementById('matchList');
-  
+
   if (data.length === 0) {
     container.innerHTML = '<div class="no-result">No matches found</div>';
     return;
   }
-  
+
   container.innerHTML = data.map(match => {
-    const matchTime = getMatchDateTime(match);
-    const isLive = match.status === 'live' || matchTime < new Date();
-    const badge = isLive ? '<span class="live-badge">Live</span>' : '';
-    const firstUrl = match.channels && match.channels.length > 0 ? match.channels[0].url : '';
-    
+    const isLive = match.status === 'live';
+    const badge = isLive? '<span class="live-badge">Live</span>' : '';
+
     return `
-      <div class="match-card" onclick='playStream("${firstUrl}")'>
+      <div class="match-card" onclick='openMatch(${JSON.stringify(match)})'>
         ${badge}
         <div class="league">
           <img src="${match.league_logo}" alt=""> ${match.league}
@@ -56,41 +50,44 @@ function renderMatches(data) {
   }).join('');
 }
 
-function playStream(url) {
-  if (!url) {
-    alert('No stream available');
-    return;
+function openMatch(match) {
+  const wrapper = document.getElementById('serverWrapper');
+  const grid = document.getElementById('serverGrid');
+
+  wrapper.style.display = 'block';
+
+  grid.innerHTML = match.channels.map((ch, i) =>
+    `<button class="server-btn ${i===0?'active':''}" onclick="playChannel(this, '${ch.url}')">${ch.name}</button>`
+  ).join('');
+
+  if (match.channels.length > 0) {
+    playChannel(grid.querySelector('.server-btn'), match.channels[0].url);
   }
-  
-  document.getElementById('video-placeholder').style.display = 'none';
-  document.getElementById('countdown').style.display = 'none';
-  document.getElementById('video-iframe').style.display = 'block';
-  document.getElementById('video-iframe').src = url;
-  
-  document.querySelector('.video-container').scrollIntoView({ behavior: 'smooth' });
+
+  wrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
-function closePlayer() {
-  document.getElementById('video-iframe').style.display = 'none';
-  document.getElementById('video-iframe').src = 'about:blank';
-  document.getElementById('video-placeholder').style.display = 'block';
+function playChannel(btn, url) {
+  currentChannel = url;
+  document.querySelectorAll('.server-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('video-iframe').src = url;
+}
+
+function refreshStream() {
+  if (currentChannel) {
+    document.getElementById('video-iframe').src = currentChannel;
+  }
 }
 
 document.getElementById('search').addEventListener('input', function(e) {
   const query = e.target.value.toLowerCase();
-  const filtered = matches.filter(m => 
+  const filtered = matches.filter(m =>
     m.league.toLowerCase().includes(query) ||
     m.team1.name.toLowerCase().includes(query) ||
     m.team2.name.toLowerCase().includes(query)
   );
   renderMatches(filtered);
-});
-
-document.querySelectorAll('.tab').forEach(tab => {
-  tab.addEventListener('click', function() {
-    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-    this.classList.add('active');
-  });
 });
 
 loadMatches();
