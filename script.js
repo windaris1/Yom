@@ -3,32 +3,13 @@ let currentChannel = null;
 let activeMatchId = null;
 
 async function loadMatches() {
-  try {
-    const res = await fetch('matches.json');
-    matches = await res.json();
-    renderMatches(matches);
-  } catch (err) {
-    document.getElementById('matchList').innerHTML = '<div class="no-live-message">Failed to load matches</div>';
-  }
-}
-
-function getFlagUrl(code) {
-  return code? `https://flagcdn.com/w40/${code}.png` : '';
-}
-
-function formatDate(dateStr) {
-  const date = new Date(dateStr);
-  return date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+  const res = await fetch('matches.json');
+  matches = await res.json();
+  renderMatches(matches);
 }
 
 function renderMatches(data) {
   const container = document.getElementById('matchList');
-
-  if (data.length === 0) {
-    container.innerHTML = '<div class="no-live-message"><h3>No Live Events</h3><p>Check back later</p></div>';
-    return;
-  }
-
   container.innerHTML = data.map(match => {
     const isLive = match.status === 'live';
     const isActive = activeMatchId === match.id;
@@ -41,14 +22,14 @@ function renderMatches(data) {
           ${match.league}
         </h2>
         <div class="team">
-          <img class="team-logo" src="${getFlagUrl(match.team1.code)}" alt="">
+          <img class="team-logo" src="https://flagcdn.com/w40/${match.team1.code}.png" alt="">
           ${match.team1.name}
         </div>
         <div class="team">
-          <img class="team-logo" src="${getFlagUrl(match.team2.code)}" alt="">
+          <img class="team-logo" src="https://flagcdn.com/w40/${match.team2.code}.png" alt="">
           ${match.team2.name}
         </div>
-        <div class="kickoff-match-date">${formatDate(match.kickoff_date)}</div>
+        <div class="kickoff-match-date">${match.kickoff_date}</div>
         <div class="kickoff-match-time">${match.kickoff_time}</div>
 
         <div class="server-buttons ${isActive?'active':''}" id="server-${match.id}">
@@ -67,12 +48,10 @@ function toggleMatch(matchId) {
   const match = matches.find(m => m.id === matchId);
   const serverDiv = document.getElementById(`server-${matchId}`);
 
-  // Close other
   if (activeMatchId && activeMatchId!== matchId) {
     document.getElementById(`server-${activeMatchId}`).classList.remove('active');
   }
 
-  // Toggle
   if (activeMatchId === matchId) {
     serverDiv.classList.remove('active');
     activeMatchId = null;
@@ -80,7 +59,6 @@ function toggleMatch(matchId) {
     serverDiv.classList.add('active');
     activeMatchId = matchId;
 
-    // Render servers
     const grid = document.getElementById(`grid-${matchId}`);
     grid.innerHTML = match.channels.map((ch, i) =>
       `<div class="server-button ${i===0?'active':''}" onclick="playChannel(this, '${ch.url}', event)">${ch.name}</div>`
