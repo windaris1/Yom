@@ -12,45 +12,32 @@
 <div id="main-content">
   <!-- Video Kiri -->
   <div class="video-container">
-    <div class="video-wrapper" id="video-wrapper-container">
-      <div id="single-view">
-        <img id="video-placeholder" src="https://kltraid.pages.dev/images/index.png" alt="Video Placeholder">
-        <iframe id="video-iframe" src="about:blank" frameborder="0" allowfullscreen></iframe>
-        <div class="countdown-wrapper" id="countdown" style="display:none;">
-          <div class="countdown-title">Event will start in:</div>
-          <div class="countdown-timer"></div>
-        </div>
-      </div>
+    <div class="video-wrapper">
+      <img id="video-placeholder" src="https://kltraid.pages.dev/images/index.png" alt="Video Placeholder">
+      <iframe id="video-iframe" src="about:blank" frameborder="0" allowfullscreen></iframe>
     </div>
   </div>
 
   <!-- Sidebar Kanan -->
   <div class="sidebar">
-    <!-- Tabs -->
     <div class="menu-wrapper-top">
       <div class="category-scroll-container">
         <button class="category-freeze active">
           <span class="live-indicator">●</span> Live Event
         </button>
-        <div class="category-scroll-wrapper">
-          <div class="category-buttons-container">
-            <button class="category-button" data-category="hot">🔥 Hot Event</button>
-          </div>
-        </div>
+        <button class="category-button active">
+          🔥 Hot Event
+        </button>
       </div>
     </div>
 
-    <!-- Search -->
     <div class="search-wrapper">
-      <div class="search-container">
-        <div class="search-input-wrapper">
-          <span class="search-icon">🔍</span>
-          <input type="text" id="search" class="search-input" placeholder="Search by league or team name...">
-        </div>
+      <div class="search-input-wrapper">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="search" class="search-input" placeholder="Search by league or team name...">
       </div>
     </div>
 
-    <!-- List Match -->
     <div class="sidebar-content active" id="matchList"></div>
   </div>
 </div>
