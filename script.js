@@ -1,7 +1,4 @@
 let matches = [];
-let countdownInterval;
-let hls;
-let currentMatch;
 
 async function loadMatches() {
   try {
@@ -42,7 +39,7 @@ function renderMatches(data) {
     const firstUrl = match.channels && match.channels.length > 0 ? match.channels[0].url : '';
     
     return `
-      <div class="match-card" onclick='playStream(${JSON.stringify(match)}, "${firstUrl}")'>
+      <div class="match-card" onclick='playStream("${firstUrl}")'>
         ${badge}
         <div class="league">
           <img src="${match.league_logo}" alt=""> ${match.league}
@@ -59,142 +56,24 @@ function renderMatches(data) {
   }).join('');
 }
 
-function playStream(match, url) {
+function playStream(url) {
   if (!url) {
     alert('No stream available');
     return;
   }
   
-  currentMatch = match;
-  const wrapper = document.getElementById('playerWrapper');
-  const video = document.getElementById('videoPlayer');
-  const title = document.getElementById('playerTitle');
+  document.getElementById('video-placeholder').style.display = 'none';
+  document.getElementById('countdown').style.display = 'none';
+  document.getElementById('video-iframe').style.display = 'block';
+  document.getElementById('video-iframe').src = url;
   
-  wrapper.style.display = 'block';
-  title.textContent = `${match.team1.name} vs ${match.team2.name}`;
-  
-  const grid = document.getElementById('serverGrid');
-  grid.innerHTML = match.channels.map((ch, i) => 
-    `<button class="server-btn ${i===0?'active':''}" onclick="switchServer(this, '${ch.url}')">${ch.name}</button>`
-  ).join('');
-  
-  loadVideo(url);
-  wrapper.scrollIntoView({ behavior: 'smooth' });
-}
-
-function loadVideo(url) {
-  const video = document.getElementById('videoPlayer');
-  
-  if (hls) {
-    hls.destroy();
-  }
-  
-  if (Hls.isSupported()) {
-    hls = new Hls();
-    hls.loadSource(url);
-    hls.attachMedia(video);
-    hls.on(Hls.Events.MANIFEST_PARSED, () => {
-      video.play().catch(e => console.log('Autoplay blocked'));
-    });
-    hls.on(Hls.Events.ERROR, (e, data) => {
-      if (data.fatal) {
-        console.error('HLS error:', data);
-      }
-    });
-  } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-    video.src = url;
-    video.play().catch(e => console.log('Autoplay blocked'));
-  } else {
-    alert('Your browser does not support HLS streams');
-  }
-}
-
-function switchServer(btn, url) {
-  document.querySelectorAll('.server-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  loadVideo(url);
+  document.querySelector('.video-container').scrollIntoView({ behavior: 'smooth' });
 }
 
 function closePlayer() {
-  document.getElementById('playerWrapper').style.display = 'none';
-  if (hls) hls.destroy();
-  document.getElementById('videoPlayer').pause();
-}
-
-function toggleMute() {
-  const video = document.getElementById('videoPlayer');
-  const btn = document.getElementById('muteBtn');
-  video.muted = !video.muted;
-  btn.textContent = video.muted ? '🔇' : '🔊';
-}
-
-function showCountdown(matchId) {
-  const match = matches.find(m => m.id === matchId);
-  if (!match) return;
-  
-  const matchTime = getMatchDateTime(match);
-  if (matchTime < new Date()) return;
-  
-  const modal = document.getElementById('countdownModal');
-  const teamsDiv = document.getElementById('countdownTeams');
-  
-  teamsDiv.innerHTML = `
-    <div class="countdown-team">
-      <img src="${getFlagUrl(match.team1.code)}" alt="">
-      <div>${match.team1.name}</div>
-    </div>
-    <div class="countdown-vs">VS</div>
-    <div class="countdown-team">
-      <img src="${getFlagUrl(match.team2.code)}" alt="">
-      <div>${match.team2.name}</div>
-    </div>
-  `;
-  
-  modal.classList.add('active');
-  updateCountdown(matchTime);
-  
-  clearInterval(countdownInterval);
-  countdownInterval = setInterval(() => updateCountdown(matchTime), 1000);
-}
-
-function updateCountdown(targetTime) {
-  const now = new Date();
-  const diff = targetTime - now;
-  
-  if (diff <= 0) {
-    closeCountdown();
-    renderMatches(matches);
-    return;
-  }
-  
-  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-  const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-  const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-  
-  document.getElementById('countdownTimer').innerHTML = `
-    <div class="timer-block">
-      <div class="timer-value">${String(days).padStart(2, '0')}</div>
-      <div class="timer-label">DAYS</div>
-    </div>
-    <div class="timer-block">
-      <div class="timer-value">${String(hours).padStart(2, '0')}</div>
-      <div class="timer-label">HOURS</div>
-    </div>
-    <div class="timer-block">
-      <div class="timer-value">${String(minutes).padStart(2, '0')}</div>
-      <div class="timer-label">MINUTES</div>
-    </div>
-    <div class="timer-block">
-      <div class="timer-value">${String(seconds).padStart(2, '0')}</div>
-      <div class="timer-label">SECONDS</div>
-    </div>
-  `;
-}
-
-function closeCountdown() {
-  document.getElementById('countdownModal').classList.remove('active');
-  clearInterval(countdownInterval);
+  document.getElementById('video-iframe').style.display = 'none';
+  document.getElementById('video-iframe').src = 'about:blank';
+  document.getElementById('video-placeholder').style.display = 'block';
 }
 
 document.getElementById('search').addEventListener('input', function(e) {
