@@ -1,12 +1,28 @@
-{
-  "id": "match1",
-  "league": "FIFA World Cup",
-  "league_logo": "https://cdn-icons-png.flaticon.com/512/1380/1380338.png",
-  "team1": {"name": "Belgium", "code": "be"},
-  "team2": {"name": "Iran", "code": "ir"},
-  "kickoff_date": "2026-06-22",
-  "kickoff_time": "02:00",
-  "status": "upcoming",
-  "category": "soccer",
-  "channels": [{"url": "https://www.youtube.com/embed/dQw4w9WgXcQ"}]
-}
+[
+  {
+    "id": "match1",
+    "league": "FIFA World Cup",
+    "league_logo": "https://cdn-icons-png.flaticon.com/512/1380/1380338.png",
+    "team1": {"name": "Belgium", "code": "be"},
+    "team2": {"name": "Iran", "code": "ir"},
+    "kickoff_date": "2026-06-22",
+    "kickoff_time": "02:00",
+    "status": "upcoming",
+    "category": "soccer",
+    "day": "Sábado",
+    "channels": [{"url": "https://www.youtube.com/embed/dQw4w9WgXcQ"}]
+  },
+  {
+    "id": "match2",
+    "league": "FIFA World Cup",
+    "league_logo": "https://cdn-icons-png.flaticon.com/512/1380/1380338.png",
+    "team1": {"name": "Brazil", "code": "br"},
+    "team2": {"name": "Argentina", "code": "ar"},
+    "kickoff_date": "2026-06-21",
+    "kickoff_time": "20:00",
+    "status": "live",
+    "category": "soccer",
+    "day": "Sábado",
+    "channels": [{"url": "https://www.youtube.com/embed/dQw4w9WgXcQ"}]
+  }
+]
