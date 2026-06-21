@@ -8,32 +8,19 @@
 </head>
 <body>
 
-  <!-- Video Player -->
-  <div class="player-wrapper" id="playerWrapper" style="display:none;">
-    <div class="player-header">
-      <button onclick="closePlayer()">✕</button>
-      <span id="playerTitle">Match</span>
-      <button onclick="toggleMute()" id="muteBtn">🔊</button>
-    </div>
-    <video id="videoPlayer" controls autoplay playsinline></video>
-    <div class="server-list">
-      <p>You can select a server stream:</p>
-      <div class="server-grid" id="serverGrid"></div>
-    </div>
-  </div>
-
   <div class="wrapper">
-    <div class="banner">
-      <img src="banner.jpg" alt="KLTRATV Banner">
-    </div>
-
-    <!-- Countdown Modal -->
-    <div class="countdown-overlay" id="countdownModal">
-      <div class="countdown-box">
-        <div class="countdown-title">MATCH STARTS IN</div>
-        <div class="countdown-teams" id="countdownTeams"></div>
-        <div class="countdown-timer" id="countdownTimer"></div>
-        <button class="close-countdown" onclick="closeCountdown()">Close</button>
+    <!-- Video Container -->
+    <div class="video-container">
+      <div class="video-wrapper" id="video-wrapper-container">
+        <div id="single-view" style="display: block;">
+          <img id="video-placeholder" src="https://kltraid.pages.dev/images/index.png" alt="Video Placeholder">
+          <div id="player"></div>
+          <iframe id="video-iframe" src="about:blank" width="100%" height="100%" frameborder="0" allowfullscreen scrolling="no" gesture="media" allow="encrypted-media" style="display:none;"></iframe>
+          <div class="countdown-wrapper" id="countdown" style="display:none;">
+            <div class="countdown-title">Event will start in:</div>
+            <div class="countdown-timer"></div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -73,7 +60,6 @@
     </div>
   </div>
 
-<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 <script src="script.js"></script>
 </body>
 </html>
