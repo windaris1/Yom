@@ -3,87 +3,77 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>KLTRATV</title>
+<title>KLTRATV | Free Streaming Sports</title>
 <link href="https://fonts.googleapis.com/css2?family=Teko:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <style>
 * {box-sizing: border-box; margin: 0; padding: 0;}
-html, body {height: 100%; overflow: hidden; font-family: 'Teko', sans-serif; background: #0f172a; color: #fff;}
+html, body {height: 100%; overflow: hidden; font-family: 'Teko', sans-serif; background: #0a0e1a; color: #fff;}
 #main-content {display: flex; width: 100%; height: 100vh;}
-.logo-vertical {position: absolute; top: 0; left: 0; writing-mode: vertical-rl; text-orientation: upright; font-size: 24px; font-weight: 700; color: #ef4444; padding: 10px 5px; z-index: 10;}
+.logo-vertical {position: absolute; top: 0; left: 0; writing-mode: vertical-rl; text-orientation: upright; font-size: 24px; font-weight: 700; background: linear-gradient(180deg, #ef4444, #3b82f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; padding: 10px 5px; z-index: 10;}
 .video-container {flex: 1; background: #000; height: 100vh; position: relative;}
 .video-wrapper {position: relative; width: 100%; height: 100%;}
-.video-wrapper img, .video-wrapper iframe {position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;}
-.countdown-wrapper {position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: min(330px, calc(100% - 34px)); background: linear-gradient(180deg, rgba(15, 23, 42, 0.9), rgba(2, 6, 23, 0.98)); padding: 12px; border-radius: 12px; border: 1px solid rgba(148, 163, 184, 0.22); backdrop-filter: blur(10px); z-index: 5;}
-.countdown-title {text-align: center; font-size: 12px; color: rgba(226, 232, 240, 0.78); letter-spacing: 1px; margin-bottom: 10px;}
-.countdown-event-info {display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 10px; margin-bottom: 10px;}
-.countdown-team {display: flex; flex-direction: column; align-items: center; gap: 5px;}
-.countdown-logo-box {width: 34px; height: 34px; background: rgba(15, 23, 42, 0.58); border: 1px solid rgba(148, 163, 184, 0.18); border-radius: 50%; display: flex; align-items: center; justify-content: center; padding: 5px;}
+.video-wrapper img,.video-wrapper iframe {position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;}
+.countdown-wrapper {position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: min(380px, calc(100% - 34px)); background: linear-gradient(180deg, rgba(15, 23, 42, 0.95), rgba(2, 6, 23, 0.98)); padding: 16px; border-radius: 16px; border: 1px solid rgba(148, 163, 184, 0.25); backdrop-filter: blur(12px); z-index: 5; box-shadow: 0 8px 32px rgba(0,0,0,0.5);}
+.countdown-title {text-align: center; font-size: 13px; color: rgba(226, 232, 240, 0.8); letter-spacing: 1.5px; margin-bottom: 14px; font-weight: 600;}
+.countdown-event-info {display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 12px; margin-bottom: 14px;}
+.countdown-team {display: flex; flex-direction: column; align-items: center; gap: 6px;}
+.countdown-logo-box {width: 42px; height: 42px; background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(148, 163, 184, 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; padding: 6px;}
 .countdown-logo-box img {width: 100%; height: 100%; object-fit: contain;}
-.countdown-team span {font-size: 12px; font-weight: 600; text-align: center;}
-.countdown-vs {font-size: 11px; font-weight: 700; color: #e0f2fe;}
-.countdown-timer {display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px;}
-.time-unit {background: linear-gradient(180deg, rgba(15, 23, 42, 0.9), rgba(2, 6, 23, 0.96)); border: 1px solid rgba(148, 163, 184, 0.14); border-radius: 8px; padding: 6px 4px; text-align: center;}
-.time-unit strong {display: block; font-size: 24px; font-weight: 700;}
-.time-unit span {font-size: 9px; color: rgba(148, 163, 184, 0.78); letter-spacing: 0.6px;}
-.sidebar {flex: 0 0 400px; width: 400px; height: 100vh; background: #0f172a; display: flex; flex-direction: column; border-left: 1px solid #1e293b;}
-.menu-wrapper-top {padding: 8px; background: #0f172a;}
-.category-scroll-container {display: flex; align-items: center; gap: 6px;}
+.countdown-team span {font-size: 14px; font-weight: 600; text-align: center;}
+.countdown-vs {font-size: 12px; font-weight: 700; color: #60a5fa;}
+.countdown-timer {display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;}
+.time-unit {background: linear-gradient(180deg, rgba(30, 41, 59, 0.9), rgba(15, 23, 42, 0.96)); border: 1px solid rgba(148, 163, 184, 0.18); border-radius: 10px; padding: 10px 6px; text-align: center;}
+.time-unit strong {display: block; font-size: 28px; font-weight: 700; color: #fff;}
+.time-unit span {font-size: 10px; color: rgba(148, 163, 184, 0.8); letter-spacing: 0.8px;}
+.sidebar {flex: 0 0 400px; width: 400px; height: 100vh; background: #0a0e1a; display: flex; flex-direction: column; border-left: 1px solid #1e293b;}
+.menu-wrapper-top {padding: 10px; background: #0a0e1a;}
+.category-scroll-container {display: flex; align-items: center; gap: 8px;}
 .category-scroll-wrapper {flex: 1; overflow-x: auto; scrollbar-width: none;}
 .category-scroll-wrapper::-webkit-scrollbar {display: none;}
-.category-buttons-container {display: flex; gap: 6px;}
-.category-freeze, .category-button {flex: 0 0 auto; padding: 8px 14px; background: #1e293b; border: 1px solid #334155; border-radius: 6px; color: #fff; font-family: 'Teko', sans-serif; font-size: 14px; white-space: nowrap; cursor: pointer;}
-.category-freeze.active {border-color: #ef4444;}
-.category-button.active {border-color: #f59e0b;}
+.category-buttons-container {display: flex; gap: 8px;}
+.category-freeze,.category-button {flex: 0 0 auto; padding: 8px 16px; background: #1e293b; border: 1px solid #334155; border-radius: 8px; color: #cbd5e1; font-family: 'Teko', sans-serif; font-size: 15px; white-space: nowrap; cursor: pointer; transition: all 0.2s;}
+.category-freeze.active {background: #ef4444; border-color: #ef4444; color: #fff;}
+.category-button.active {background: #f59e0b; border-color: #f59e0b; color: #0a0e1a;}
 .live-indicator {color: #ef4444; animation: pulse 1.5s infinite;}
 @keyframes pulse {0%, 100% {opacity: 1;} 50% {opacity: 0.4;}}
-.category-arrow-btn {flex: 0 0 32px; width: 32px; height: 38px; background: #1e293b; border: 1px solid #334155; border-radius: 6px; color: #fff; cursor: pointer;}
-.search-wrapper {padding: 8px;}
+.category-arrow-btn {flex: 0 0 34px; width: 34px; height: 40px; background: #1e293b; border: 1px solid #334155; border-radius: 8px; color: #fff; cursor: pointer;}
+.search-wrapper {padding: 10px;}
 .search-input-wrapper {position: relative;}
 .search-icon {position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #64748b;}
-.search-input {width: 100%; padding: 10px 12px 10px 38px; background: #1e293b; border: 1px solid #334155; border-radius: 6px; color: #fff; font-family: 'Teko', sans-serif; font-size: 14px; outline: none;}
+.search-input {width: 100%; padding: 12px 12px 12px 40px; background: #1e293b; border: 1px solid #334155; border-radius: 8px; color: #fff; font-family: 'Teko', sans-serif; font-size: 15px; outline: none;}
 .search-input::placeholder {color: #64748b;}
 .clear-search-btn {position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: none; border: none; color: #64748b; cursor: pointer;}
-.sidebar-content {flex: 1; overflow-y: auto; padding: 8px; display: none;}
+.sidebar-content {flex: 1; overflow-y: auto; padding: 10px; display: none;}
 .sidebar-content.active {display: block;}
-.event-container {background: #1e293b; border: 1px solid #334155; border-radius: 6px; padding: 10px; margin-bottom: 6px; cursor: pointer;}
-.event-container:hover {background: #273449;}
-.event-container h2 {margin: 0 0 8px 0; padding-bottom: 8px; border-bottom: 1px solid #334155; font-size: 15px; font-weight: 600; display: flex; align-items: center; gap: 8px;}
-.team {display: flex; align-items: center; gap: 10px; margin-bottom: 6px; font-size: 14px;}
-.team-logo {width: 22px; height: 22px; border-radius: 4px;}
-.kickoff-match-date {text-align: right; font-size: 12px; color: #94a3b8;}
-.kickoff-match-time {text-align: right; font-size: 14px; color: #fff; font-weight: 600;}
-.server-buttons {display: none; margin-top: 8px; padding-top: 8px; border-top: 1px solid #334155;}
+.event-container {background: #1e293b; border: 1px solid #334155; border-radius: 10px; padding: 12px; margin-bottom: 8px; cursor: pointer; transition: all 0.2s;}
+.event-container:hover {background: #273449; border-color: #475569;}
+.event-container h2 {margin: 0 0 10px 0; padding-bottom: 10px; border-bottom: 1px solid #334155; font-size: 16px; font-weight: 600; display: flex; align-items: center; gap: 10px;}
+.event-container.live-badge {margin-left: auto; background: #ef4444; color: #fff; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 700;}
+.team {display: flex; align-items: center; gap: 12px; margin-bottom: 8px; font-size: 15px;}
+.team-logo {width: 24px; height: 24px; border-radius: 4px;}
+.match-time {margin-left: auto; text-align: right;}
+.kickoff-match-date {font-size: 13px; color: #94a3b8;}
+.kickoff-match-time {font-size: 15px; color: #fff; font-weight: 600;}
+.server-buttons {display: none; margin-top: 10px; padding-top: 10px; border-top: 1px solid #334155;}
 .server-buttons.active {display: block;}
-.buttons-container {display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px;}
-.server-button {padding: 8px; background: #334155; border: 1px solid #475569; border-radius: 6px; text-align: center; font-size: 13px; cursor: pointer;}
+.buttons-container {display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;}
+.server-button {padding: 10px; background: #334155; border: 1px solid #475569; border-radius: 8px; text-align: center; font-size: 14px; cursor: pointer;}
 .server-button.active {background: #3b82f6; border-color: #3b82f6;}
-.menu-wrapper-bottom {padding: 8px; border-top: 1px solid #1e293b; background: #0f172a;}
-.menu-container {display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px;}
-.menu-button {padding: 8px 4px; background: #1e293b; border: 1px solid #334155; border-radius: 6px; color: #fff; font-family: 'Teko', sans-serif; font-size: 12px; display: flex; flex-direction: column; align-items: center; gap: 2px; cursor: pointer;}
+.menu-wrapper-bottom {padding: 10px; border-top: 1px solid #1e293b; background: #0a0e1a;}
+.menu-container {display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;}
+.menu-button {padding: 10px 6px; background: #1e293b; border: 1px solid #334155; border-radius: 8px; color: #cbd5e1; font-family: 'Teko', sans-serif; font-size: 13px; display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer;}
 .multiview-button i {color: #60a5fa;}
 .androidtv-button i {color: #4ade80;}
 .chat-button i {color: #c084fc;}
 .saweria-button i {color: #fbbf24;}
-.modal-overlay {position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8); display: flex; align-items: center; justify-content: center; z-index: 1000; backdrop-filter: blur(4px);}
-.modal-container-modern {background: #1e293b; border: 1px solid #334155; border-radius: 12px; width: 90%; max-width: 600px;}
-.modal-header-modern {padding: 16px; border-bottom: 1px solid #334155; display: flex; justify-content: space-between; align-items: center;}
-.modal-close-btn-modern {background: none; border: none; color: #94a3b8; font-size: 20px; cursor: pointer;}
-.modal-body-modern {padding: 16px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;}
-.grid-option-modern {background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 12px; cursor: pointer; text-align: center;}
-.grid-option-modern:hover {border-color: #3b82f6;}
-.grid-preview-modern {display: grid; gap: 4px; margin-bottom: 8px;}
-.grid-preview-2, .grid-preview-4 {grid-template-columns: repeat(2, 1fr);}
-.grid-box-modern {background: #334155; height: 40px; border-radius: 4px;}
-.grid-label-modern {font-size: 16px; font-weight: 600; margin-bottom: 2px;}
-.grid-subtitle-modern {font-size: 12px; color: #94a3b8;}
 @media (max-width: 900px) {
     #main-content {flex-direction: column; height: auto; overflow-y: auto;}
     html, body {overflow: auto;}
-    .video-container, .sidebar {width: 100%; height: auto; flex: none;}
-    .video-wrapper {padding-bottom: 56.25%; height: 0;}
-    .video-wrapper img, .video-wrapper iframe {position: absolute;}
-    .sidebar {height: auto; border-left: none; border-top: 1px solid #1e293b;}
+   .video-container,.sidebar {width: 100%; height: auto; flex: none;}
+   .video-wrapper {padding-bottom: 56.25%; height: 0;}
+   .video-wrapper img,.video-wrapper iframe {position: absolute;}
+   .sidebar {height: auto; border-left: none; border-top: 1px solid #1e293b;}
 }
 </style>
 </head>
@@ -105,13 +95,13 @@ html, body {height: 100%; overflow: hidden; font-family: 'Teko', sans-serif; bac
                     <div class="countdown-timer"></div>
                 </div>
             </div>
-            <iframe id="multi-view-frame" style="display: none;"></iframe>
         </div>
     </div>
     <div class="sidebar">
         <div class="menu-wrapper-top">
             <div class="category-scroll-container">
-                <button class="category-freeze active" onclick="showLiveEvent()"> <i class="fas fa-circle live-indicator"></i> Live Event </button>
+                <button class="category-freeze active" onclick="switchTab('live', this)"> <i class="fas fa-circle live-indicator"></i> Live Event </button>
+                <button class="category-freeze" onclick="switchTab('hot', this)"> <i class="fas fa-fire"></i> Hot Event </button>
                 <button class="category-arrow-btn" onclick="scrollCategories('left')"><i class="fas fa-chevron-left"></i></button>
                 <div class="category-scroll-wrapper"><div id="category-buttons" class="category-buttons-container"></div></div>
                 <button class="category-arrow-btn" onclick="scrollCategories('right')"><i class="fas fa-chevron-right"></i></button>
@@ -120,14 +110,14 @@ html, body {height: 100%; overflow: hidden; font-family: 'Teko', sans-serif; bac
         <div class="search-wrapper">
             <div class="search-input-wrapper">
                 <i class="fas fa-search search-icon"></i>
-                <input type="text" id="event-search-input" class="search-input" placeholder="Search...">
+                <input type="text" id="event-search-input" class="search-input" placeholder="Search by league or team name...">
                 <button id="clear-search-btn" class="clear-search-btn" style="display: none;"><i class="fas fa-times"></i></button>
             </div>
         </div>
         <div id="live-event" class="sidebar-content active"><div id="content"></div></div>
         <div class="menu-wrapper-bottom">
             <div class="menu-container">
-                <button class="menu-button multiview-button" onclick="toggleMultiView()"><i class="fas fa-th"></i> Multi View</button>
+                <button class="menu-button multiview-button"><i class="fas fa-th"></i> Multi View</button>
                 <button class="menu-button androidtv-button"><i class="fab fa-android"></i> Android TV</button>
                 <button class="menu-button chat-button"><i class="fas fa-comments"></i> Chat</button>
                 <button class="menu-button saweria-button"><i class="fa-solid fa-mug-hot"></i> Saweria</button>
@@ -135,17 +125,8 @@ html, body {height: 100%; overflow: hidden; font-family: 'Teko', sans-serif; bac
         </div>
     </div>
 </div>
-<div id="grid-selection-modal" class="modal-overlay" style="display: none;">
-    <div class="modal-container-modern">
-        <div class="modal-header-modern"><h3>Choose Layout</h3><button class="modal-close-btn-modern" onclick="closeGridModal()">✕</button></div>
-        <div class="modal-body-modern">
-            <div class="grid-option-modern" onclick="selectGrid(2)"><div class="grid-preview-modern grid-preview-2"><div class="grid-box-modern"></div><div class="grid-box-modern"></div></div><div class="grid-label-modern">2 Grid</div></div>
-            <div class="grid-option-modern" onclick="selectGrid(4)"><div class="grid-preview-modern grid-preview-4"><div class="grid-box-modern"></div><div class="grid-box-modern"></div><div class="grid-box-modern"></div><div class="grid-box-modern"></div></div><div class="grid-label-modern">4 Grid</div></div>
-        </div>
-    </div>
-</div>
 <script>
-let matches = []; let activeMatchId = null; let countdownInterval = null;
+let matches = []; let activeMatchId = null; let countdownInterval = null; let currentTab = 'live';
 document.addEventListener('DOMContentLoaded', loadMatches);
 async function loadMatches() {
   try {
@@ -154,28 +135,32 @@ async function loadMatches() {
     renderCategories(); renderMatches(matches);
     const upcoming = matches.find(m => m.status === 'upcoming');
     if (upcoming) showCountdown(upcoming);
-  } catch (err) { document.getElementById('content').innerHTML = '<div style="padding:20px;text-align:center;">Failed to load matches.json</div>'; }
+  } catch (err) { document.getElementById('content').innerHTML = '<div style="padding:20px;text-align:center;color:#ef4444;">Failed to load matches.json</div>'; }
 }
 function renderCategories() {
-  const categories = ['All', ...new Set(matches.map(m => m.category || 'Other'))];
-  document.getElementById('category-buttons').innerHTML = categories.map(cat => `<button class="category-button ${cat === 'All' ? 'active' : ''}" onclick="filterCategory('${cat}', this)">${cat}</button>`).join('');
+  const days = ['All', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo'];
+  document.getElementById('category-buttons').innerHTML = days.map(d => `<button class="category-button ${d === 'All'? 'active' : ''}" onclick="filterDay('${d}', this)">${d}</button>`).join('');
 }
-function filterCategory(cat, btn) {
+function filterDay(day, btn) {
   document.querySelectorAll('.category-button').forEach(b => b.classList.remove('active')); btn.classList.add('active');
-  const filtered = cat === 'All' ? matches : matches.filter(m => (m.category || 'Other') === cat);
+  const filtered = day === 'All'? matches : matches.filter(m => m.day === day);
+  renderMatches(filtered);
+}
+function switchTab(tab, btn) {
+  currentTab = tab;
+  document.querySelectorAll('.category-freeze').forEach(b => b.classList.remove('active')); btn.classList.add('active');
+  const filtered = tab === 'live'? matches.filter(m => m.status === 'live') : matches.filter(m => m.status === 'upcoming');
   renderMatches(filtered);
 }
 function renderMatches(data) {
   const contentDiv = document.getElementById('content');
-  if (data.length === 0) { contentDiv.innerHTML = '<div style="padding:20px;text-align:center;">No matches</div>'; return; }
+  if (data.length === 0) { contentDiv.innerHTML = '<div style="padding:20px;text-align:center;color:#64748b;">No matches</div>'; return; }
   contentDiv.innerHTML = data.map(match => `
     <div class="event-container" onclick='toggleMatch("${match.id}")'>
-      <h2><img src="${match.league_logo}" width="18" height="18">${match.league}</h2>
+      <h2><img src="${match.league_logo}" width="18" height="18">${match.league} ${match.status === 'live'? '<span class="live-badge">Live</span>' : ''}</h2>
       <div class="team"><img class="team-logo" src="https://flagcdn.com/w40/${match.team1.code}.png">${match.team1.name}</div>
-      <div class="team"><img class="team-logo" src="https://flagcdn.com/w40/${match.team2.code}.png">${match.team2.name}</div>
-      <div class="kickoff-match-date">${match.kickoff_date}</div>
-      <div class="kickoff-match-time">${match.kickoff_time}</div>
-      <div class="server-buttons ${activeMatchId === match.id ? 'active' : ''}" id="server-${match.id}">
+      <div class="team"><img class="team-logo" src="https://flagcdn.com/w40/${match.team2.code}.png">${match.team2.name}<div class="match-time"><div class="kickoff-match-date">${match.kickoff_date}</div><div class="kickoff-match-time">${match.kickoff_time}</div></div></div>
+      <div class="server-buttons ${activeMatchId === match.id? 'active' : ''}" id="server-${match.id}">
         <div class="buttons-container" id="grid-${match.id}"></div>
       </div>
     </div>
@@ -184,12 +169,12 @@ function renderMatches(data) {
 function toggleMatch(matchId) {
   const match = matches.find(m => m.id === matchId);
   const serverDiv = document.getElementById(`server-${matchId}`);
-  if (activeMatchId && activeMatchId !== matchId) { document.getElementById(`server-${activeMatchId}`).classList.remove('active'); }
+  if (activeMatchId && activeMatchId!== matchId) { document.getElementById(`server-${activeMatchId}`).classList.remove('active'); }
   if (activeMatchId === matchId) { serverDiv.classList.remove('active'); activeMatchId = null; }
   else {
     serverDiv.classList.add('active'); activeMatchId = matchId;
     const grid = document.getElementById(`grid-${matchId}`);
-    grid.innerHTML = match.channels.map((ch, i) => `<div class="server-button ${i === 0 ? 'active' : ''}" onclick="playChannel(this, '${ch.url}', event)">CH ${i + 1}</div>`).join('');
+    grid.innerHTML = match.channels.map((ch, i) => `<div class="server-button ${i === 0? 'active' : ''}" onclick="playChannel(this, '${ch.url}', event)">CH ${i + 1}</div>`).join('');
     if (match.channels.length > 0) playChannel(grid.querySelector('.server-button'), match.channels[0].url, event);
   }
 }
@@ -225,26 +210,7 @@ function showCountdown(match) {
     `;
   }, 1000);
 }
-document.getElementById('event-search-input').addEventListener('input', function(e) {
-  const query = e.target.value.toLowerCase();
-  document.getElementById('clear-search-btn').style.display = query ? 'block' : 'none';
-  const filtered = matches.filter(m => m.league.toLowerCase().includes(query) || m.team1.name.toLowerCase().includes(query) || m.team2.name.toLowerCase().includes(query));
-  renderMatches(filtered);
-});
-document.getElementById('clear-search-btn').addEventListener('click', function() {
-  document.getElementById('event-search-input').value = ''; this.style.display = 'none'; renderMatches(matches);
-});
-function scrollCategories(dir) { const wrapper = document.querySelector('.category-scroll-wrapper'); wrapper.scrollBy({left: dir === 'left' ? -200 : 200, behavior: 'smooth'}); }
-function showLiveEvent() { document.querySelectorAll('.sidebar-content').forEach(el => el.classList.remove('active')); document.getElementById('live-event').classList.add('active'); }
-function toggleMultiView() {document.getElementById('grid-selection-modal').style.display = 'flex';}
-function closeGridModal() {document.getElementById('grid-selection-modal').style.display = 'none';}
-function selectGrid(count) {
-  closeGridModal(); document.getElementById('single-view').style.display = 'none';
-  document.getElementById('multi-view-frame').style.display = 'block';
-  let cols = count <= 2 ? 2 : 4; let html = `<div style="display:grid;grid-template-columns:repeat(${cols},1fr);gap:4px;width:100%;height:100%;background:#000;">`;
-  for(let i=0; i<count; i++) html += `<iframe src="about:blank" style="width:100%;height:100%;border:none;"></iframe>`; html += '</div>';
-  document.getElementById('multi-view-frame').srcdoc = html;
-}
+function scrollCategories(dir) { const wrapper = document.querySelector('.category-scroll-wrapper'); wrapper.scrollBy({left: dir === 'left'? -200 : 200, behavior: 'smooth'}); }
 </script>
 </body>
 </html>
