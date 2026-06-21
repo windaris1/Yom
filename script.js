@@ -1,5 +1,6 @@
 let matches = [];
 let currentChannel = null;
+let activeMatchId = null;
 
 async function loadMatches() {
   try {
@@ -23,55 +24,78 @@ function formatDate(dateStr) {
 function renderMatches(data) {
   const container = document.getElementById('matchList');
 
-  if (data.length === 0) {
-    container.innerHTML = '<div class="no-result">No matches found</div>';
-    return;
-  }
-
   container.innerHTML = data.map(match => {
     const isLive = match.status === 'live';
     const badge = isLive? '<span class="live-badge">Live</span>' : '';
+    const isActive = activeMatchId === match.id;
 
     return `
-      <div class="match-card" onclick='openMatch(${JSON.stringify(match)})'>
-        ${badge}
-        <div class="league">
-          <img src="${match.league_logo}" alt=""> ${match.league}
+      <div class="match-item">
+        <div class="match-card" onclick='toggleMatch("${match.id}")'>
+          ${badge}
+          <div class="league">
+            <img src="${match.league_logo}" alt=""> ${match.league}
+          </div>
+          <div class="team">
+            <img src="${getFlagUrl(match.team1.code)}" alt=""> ${match.team1.name}
+          </div>
+          <div class="team">
+            <img src="${getFlagUrl(match.team2.code)}" alt=""> ${match.team2.name}
+          </div>
+          <div class="match-time">${formatDate(match.kickoff_date)}<br>${match.kickoff_time}</div>
         </div>
-        <div class="team">
-          <img src="${getFlagUrl(match.team1.code)}" alt=""> ${match.team1.name}
+        <div class="server-wrapper ${isActive?'active':''}" id="server-${match.id}">
+          <div class="server-header">
+            <span>You can select a server stream:</span>
+            <span onclick="refreshStream()">↻</span>
+          </div>
+          <div class="server-grid" id="grid-${match.id}"></div>
         </div>
-        <div class="team">
-          <img src="${getFlagUrl(match.team2.code)}" alt=""> ${match.team2.name}
-        </div>
-        <div class="match-time">${formatDate(match.kickoff_date)}<br>${match.kickoff_time}</div>
       </div>
     `;
   }).join('');
 }
 
-function openMatch(match) {
-  const wrapper = document.getElementById('serverWrapper');
-  const grid = document.getElementById('serverGrid');
+function toggleMatch(matchId) {
+  const match = matches.find(m => m.id === matchId);
+  const serverDiv = document.getElementById(`server-${matchId}`);
 
-  wrapper.style.display = 'block';
-
-  grid.innerHTML = match.channels.map((ch, i) =>
-    `<button class="server-btn ${i===0?'active':''}" onclick="playChannel(this, '${ch.url}')">${ch.name}</button>`
-  ).join('');
-
-  if (match.channels.length > 0) {
-    playChannel(grid.querySelector('.server-btn'), match.channels[0].url);
+  // Close other open servers
+  if (activeMatchId && activeMatchId!== matchId) {
+    document.getElementById(`server-${activeMatchId}`).classList.remove('active');
   }
 
-  wrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  // Toggle current
+  if (activeMatchId === matchId) {
+    serverDiv.classList.remove('active');
+    activeMatchId = null;
+  } else {
+    serverDiv.classList.add('active');
+    activeMatchId = matchId;
+
+    // Render servers
+    const grid = document.getElementById(`grid-${matchId}`);
+    grid.innerHTML = match.channels.map((ch, i) =>
+      `<button class="server-btn ${i===0?'active':''}" onclick="playChannel(this, '${ch.url}', event)">${ch.name}</button>`
+    ).join('');
+
+    // Auto play first
+    if (match.channels.length > 0) {
+      playChannel(grid.querySelector('.server-btn'), match.channels[0].url, event);
+    }
+  }
 }
 
-function playChannel(btn, url) {
+function playChannel(btn, url, e) {
+  e.stopPropagation();
   currentChannel = url;
-  document.querySelectorAll('.server-btn').forEach(b => b.classList.remove('active'));
+
+  // Update active button
+  btn.parentElement.querySelectorAll('.server-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
+
   document.getElementById('video-iframe').src = url;
+  document.querySelector('.video-container').scrollIntoView({ behavior: 'smooth' });
 }
 
 function refreshStream() {
