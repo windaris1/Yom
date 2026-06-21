@@ -10,47 +10,43 @@ async function loadMatches() {
 
 function renderMatches(data) {
   const container = document.getElementById('matchList');
-  container.innerHTML = data.map(match => {
-    const isLive = match.status === 'live';
-    const isActive = activeMatchId === match.id;
-
-    return `
-      <div class="event-container" onclick='toggleMatch("${match.id}")'>
-        ${isLive? '<div class="live-label">Live</div>' : ''}
-        <h2>
-          <img class="sport-icon" src="${match.league_logo}" alt="">
-          ${match.league}
-        </h2>
-        <div class="team">
-          <img class="team-logo" src="https://flagcdn.com/w40/${match.team1.code}.png" alt="">
-          ${match.team1.name}
-        </div>
-        <div class="team">
-          <img class="team-logo" src="https://flagcdn.com/w40/${match.team2.code}.png" alt="">
-          ${match.team2.name}
-        </div>
-        <div class="kickoff-match-date">${match.kickoff_date}</div>
-        <div class="kickoff-match-time">${match.kickoff_time}</div>
-
-        <div class="server-buttons ${isActive?'active':''}" id="server-${match.id}">
-          <div class="server-toolbar">
-            <div class="instruction">You can select a server stream:</div>
-            <button class="server-refresh-button" onclick="refreshStream(event)">↻</button>
-          </div>
-          <div class="buttons-container" id="grid-${match.id}"></div>
-        </div>
+  container.innerHTML = data.map(match => `
+    <div class="event-container" onclick='toggleMatch("${match.id}")'>
+      ${match.status === 'live'? '<div class="live-label">Live</div>' : ''}
+      <h2>
+        <img class="sport-icon" src="${match.league_logo}">
+        ${match.league}
+      </h2>
+      <div class="team">
+        <img class="team-logo" src="https://flagcdn.com/w40/${match.team1.code}.png">
+        ${match.team1.name}
       </div>
-    `;
-  }).join('');
+      <div class="team">
+        <img class="team-logo" src="https://flagcdn.com/w40/${match.team2.code}.png">
+        ${match.team2.name}
+      </div>
+      <div class="kickoff-match-date">${match.kickoff_date}</div>
+      <div class="kickoff-match-time">${match.kickoff_time}</div>
+
+      <div class="server-buttons ${activeMatchId === match.id? 'active' : ''}" id="server-${match.id}">
+        <div class="server-toolbar">
+          <span>Select a server stream:</span>
+          <span onclick="refreshStream(event)" style="cursor:pointer">↻</span>
+        </div>
+        <div class="buttons-container" id="grid-${match.id}"></div>
+      </div>
+    `
+  ).join('');
 }
 
 function toggleMatch(matchId) {
   const match = matches.find(m => m.id === matchId);
-  const serverDiv = document.getElementById(`server-${matchId}`);
 
   if (activeMatchId && activeMatchId!== matchId) {
     document.getElementById(`server-${activeMatchId}`).classList.remove('active');
   }
+
+  const serverDiv = document.getElementById(`server-${matchId}`);
 
   if (activeMatchId === matchId) {
     serverDiv.classList.remove('active');
