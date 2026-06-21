@@ -3,13 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>KLTRA TV</title>
+<title>KLTRATV</title>
+<link href="https://fonts.googleapis.com/css2?family=Teko:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <div id="main-content">
-  <!-- Video Container -->
+  <!-- Video Kiri -->
   <div class="video-container">
     <div class="video-wrapper" id="video-wrapper-container">
       <div id="single-view">
@@ -23,8 +24,23 @@
     </div>
   </div>
 
-  <!-- Sidebar = List + Server -->
+  <!-- Sidebar Kanan -->
   <div class="sidebar">
+    <!-- Tabs -->
+    <div class="menu-wrapper-top">
+      <div class="category-scroll-container">
+        <button class="category-freeze active">
+          <span class="live-indicator">●</span> Live Event
+        </button>
+        <div class="category-scroll-wrapper">
+          <div class="category-buttons-container">
+            <button class="category-button" data-category="hot">🔥 Hot Event</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Search -->
     <div class="search-wrapper">
       <div class="search-container">
         <div class="search-input-wrapper">
@@ -34,6 +50,7 @@
       </div>
     </div>
 
+    <!-- List Match -->
     <div class="sidebar-content active" id="matchList"></div>
   </div>
 </div>
