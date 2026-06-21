@@ -16,7 +16,6 @@ body {
   margin: 0 auto;
 }
 
-/* Video Container */
 .video-container {
   width: 100%;
   background: #000;
@@ -43,7 +42,6 @@ body {
   height: 100%;
 }
 
-/* Tabs */
 .tabs {
   display: flex;
   padding: 12px 16px;
@@ -97,21 +95,20 @@ body {
   outline: none;
 }
 
-.search-box input::placeholder {
-  color: #666;
-}
-
-/* Match Cards */
 .match-list {
   padding: 0 16px;
-  display: grid;
-  grid-template-columns: 1fr;
+  display: flex;
+  flex-direction: column;
   gap: 12px;
 }
 
-.match-card {
+.match-item {
   background: #1e2129;
   border-radius: 16px;
+  overflow: hidden;
+}
+
+.match-card {
   padding: 16px;
   position: relative;
   cursor: pointer;
@@ -164,15 +161,18 @@ body {
   color: #8a8d94;
   font-size: 14px;
   margin-top: 12px;
-  line-height: 1.4;
 }
 
-/* Server List */
+/* Server List inside card */
 .server-wrapper {
-  margin: 16px;
   padding: 16px;
-  background: #1e2129;
-  border-radius: 16px;
+  background: #262a33;
+  border-top: 1px solid #2a2d36;
+  display: none;
+}
+
+.server-wrapper.active {
+  display: block;
 }
 
 .server-header {
@@ -184,14 +184,9 @@ body {
   color: #8a8d94;
 }
 
-.refresh {
-  font-size: 18px;
-  cursor: pointer;
-}
-
 .server-grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 8px;
 }
 
@@ -201,7 +196,7 @@ body {
   border: 1px solid #3a3d46;
   border-radius: 8px;
   color: #fff;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 500;
   cursor: pointer;
   text-align: center;
@@ -212,7 +207,6 @@ body {
   border-color: #3b82f6;
 }
 
-/* Bottom Nav */
 .bottom-nav {
   position: fixed;
   bottom: 0;
@@ -221,7 +215,6 @@ body {
   background: #1e2129;
   display: flex;
   border-top: 1px solid #2a2d36;
-  padding-bottom: env(safe-area-inset-bottom);
 }
 
 .nav-item {
@@ -242,26 +235,12 @@ body {
   margin-bottom: 2px;
 }
 
-.no-result {
-  text-align: center;
-  color: #666;
-  padding: 40px 0;
-}
-
-/* Responsive */
 @media (min-width: 768px) {
- .match-list {
+.match-list {
     grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
+    display: grid;
   }
- .tabs,.search-box,.match-list,.server-wrapper {
-    padding-left: 24px;
-    padding-right: 24px;
-  }
-}
-
-@media (max-width: 400px) {
- .server-grid {
-    grid-template-columns: repeat(3, 1fr);
+.server-grid {
+    grid-template-columns: repeat(5, 1fr);
   }
 }
